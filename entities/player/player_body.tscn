@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://c70y37ljl0rk0"]
+[gd_scene load_steps=7 format=3 uid="uid://c70y37ljl0rk0"]
 
 [ext_resource type="Script" uid="uid://iqakbo865cfp" path="res://entities/player/player_body.gd" id="1_i4bso"]
+[ext_resource type="Script" uid="uid://cydaqb582pukl" path="res://entities/player/spring_arm_preview_3d.gd" id="2_xhb16"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xkrkr"]
 
@@ -29,6 +30,8 @@ mesh = SubResource("BoxMesh_xhb16")
 [node name="Pivot" type="Node3D" parent="."]
 
 [node name="SpringArm3D" type="SpringArm3D" parent="Pivot"]
-spring_length = 4.0
+spring_length = 8.0
+script = ExtResource("2_xhb16")
 
 [node name="Camera3D" type="Camera3D" parent="Pivot/SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
