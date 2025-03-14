@@ -32,12 +32,22 @@ func _physics_process(delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
+	if event is InputEventMouseMotion \
+	and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		move_camera(event.relative.x, event.relative.y, 0.02)
 		
 	if event is InputEventKey:
+		if !event.is_pressed():
+			return
+		
 		if event.keycode == KEY_ESCAPE:
 			get_tree().quit()
+		
+		if event.keycode == KEY_F1:
+			if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+				Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			else:
+				Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
 func move_camera(x, y, sensitivty):
