@@ -1,8 +1,9 @@
-class_name PlayerBody
+class_name PlayerBody 
 extends CharacterBody3D
 @onready var pivot: Node3D = $Pivot
 @onready var spring: SpringArm3D = $Pivot/SpringArm3D
 @onready var mesh: MeshInstance3D = $MeshInstance3D
+
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -33,6 +34,7 @@ func _physics_process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		move_camera(event.relative.x, event.relative.y, 0.02)
+		
 	if event is InputEventKey:
 		if event.keycode == KEY_ESCAPE:
 			get_tree().quit()
