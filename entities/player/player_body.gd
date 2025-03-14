@@ -21,7 +21,7 @@ func _physics_process(delta: float) -> void:
 	if direction != Vector2.ZERO:
 		mesh.rotation.y = lerp_angle(
 			mesh.rotation.y, 
-			direction.angle() - deg_to_rad(90), 
+			-direction.angle() - deg_to_rad(90), 
 			0.2
 		)
 	
