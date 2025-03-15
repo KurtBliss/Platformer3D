@@ -42,6 +42,8 @@ func physics_state_water():
 		"move_left", "move_right", "move_up", "move_down"
 	)
 	velocity = input.y * spring.global_basis.z * 4
+	mesh.rotation = spring.global_rotation
+	mesh.rotation_degrees.y += 180
 	move_and_slide()
 
 
