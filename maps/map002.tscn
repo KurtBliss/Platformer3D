@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://b0u7xgr2ghxn5"]
+
+[ext_resource type="PackedScene" uid="uid://so0toaa0ppu" path="res://entities/water/water.tscn" id="1_4dhk1"]
+[ext_resource type="PackedScene" uid="uid://c70y37ljl0rk0" path="res://entities/player/player_body.tscn" id="2_tipml"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4dhk1"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_tipml"]
+sky_material = SubResource("ProceduralSkyMaterial_4dhk1")
+
+[sub_resource type="Environment" id="Environment_q60og"]
+background_mode = 2
+sky = SubResource("Sky_tipml")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_q60og"]
+size = Vector2(24, 24)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4dhk1"]
+size = Vector3(24, 5, 24)
+
+[node name="World" type="CSGCombiner3D"]
+use_collision = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_q60og")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Ground" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, -5.5, 0)
+size = Vector3(100, 10, 100)
+
+[node name="WaterBed" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.152, -2.87359, -6.1076)
+operation = 2
+size = Vector3(24, 5, 24)
+
+[node name="MeshInstance3D" parent="WaterBed" instance=ExtResource("1_4dhk1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.09086, 0)
+mesh = SubResource("PlaneMesh_q60og")
+
+[node name="WaterArea" type="Area3D" parent="WaterBed" groups=["water_area"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WaterBed/WaterArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.270874, 0, 0)
+shape = SubResource("BoxShape3D_4dhk1")
+
+[node name="PlayerBody" parent="." instance=ExtResource("2_tipml")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)

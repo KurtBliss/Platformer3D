@@ -11,13 +11,17 @@ config_version=5
 [application]
 
 config/name="Platformer3D"
-run/main_scene="uid://dtbw0wjlg868w"
+run/main_scene="uid://b0u7xgr2ghxn5"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/proto_shape/plugin.cfg")
+
+[global_group]
+
+water_area=""
 
 [input]
 

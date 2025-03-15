@@ -5,7 +5,7 @@ extends Node
 @export_tool_button("Spin") var spin_button = func():
 	spin()
 
-func on_spin(body: Node3D):
+func on_spin(_body: Node3D):
 	if node is Node3D:
 		spin()
 

@@ -1,33 +1,47 @@
 class_name PlayerBody 
 extends CharacterBody3D
+@onready var camera: Camera3D = $Pivot/SpringArm3D/Camera3D
+@onready var mesh: MeshInstance3D = $MeshInstance3D
 @onready var pivot: Node3D = $Pivot
 @onready var spring: SpringArm3D = $Pivot/SpringArm3D
-@onready var mesh: MeshInstance3D = $MeshInstance3D
+var physics_state: Callable = physics_state_default
 
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
+	physics_state.call()
+
+
+func physics_state_default():
 	velocity.y = max(velocity.y - 2, -50)
 	
-	var direction := Input.get_vector(  
+	var input := Input.get_vector(  
 		"move_left", "move_right", "move_up", "move_down"
 	)
-	direction = direction.rotated(-pivot.rotation.y)
-	velocity.x = direction.x * 4
-	velocity.z = direction.y * 4
-	if direction != Vector2.ZERO:
+	input = input.rotated(-pivot.rotation.y)
+	velocity.x = input.x * 4
+	velocity.z = input.y * 4
+	if input != Vector2.ZERO:
 		mesh.rotation.y = lerp_angle(
 			mesh.rotation.y, 
-			-direction.angle() - deg_to_rad(90), 
+			-input.angle() - deg_to_rad(90), 
 			0.2
 		)
 	
 	if is_on_floor() and Input.is_action_just_pressed("ui_accept"):
 		velocity.y = 27
 	
+	move_and_slide()
+
+
+func physics_state_water():
+	var input := Input.get_vector(  
+		"move_left", "move_right", "move_up", "move_down"
+	)
+	velocity = input.y * spring.global_basis.z * 4
 	move_and_slide()
 
 
@@ -57,3 +71,13 @@ func move_camera(x, y, sensitivty):
 		-deg_to_rad(45),
 		deg_to_rad(45)
 	)
+
+
+func _on_area_3d_area_entered(area: Area3D) -> void:
+	if area.is_in_group("water_area"):
+		physics_state = physics_state_water
+
+
+func _on_area_3d_area_exited(area: Area3D) -> void:
+	if area.is_in_group("water_area"):
+		physics_state = physics_state_default
