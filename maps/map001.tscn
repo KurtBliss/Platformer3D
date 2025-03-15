@@ -48,7 +48,6 @@ use_collision = true
 transform = Transform3D(1, 0, 0, 0, 1, -1.54019e-05, 0, 1.54019e-05, 1, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_ioig2")
 use_collision = true
-flip_faces = true
 size = Vector3(25, 25, 25)
 
 [node name="Inner" type="CSGBox3D" parent="CSGCombiner3D/Outer"]
