@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cdi5vdehjh4b3"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_6fy1j"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_l23oo"]
+radius = 1.18646
+
+[node name="InteractionOrb" type="MeshInstance3D"]
+mesh = SubResource("SphereMesh_6fy1j")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_l23oo")

@@ -15,6 +15,10 @@ run/main_scene="uid://dtbw0wjlg868w"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/proto_shape/plugin.cfg")
+
 [input]
 
 move_left={
