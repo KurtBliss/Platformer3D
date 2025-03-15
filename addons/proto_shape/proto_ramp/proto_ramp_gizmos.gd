@@ -46,11 +46,11 @@ func init_gizmo(plugin: ProtoGizmoPlugin) -> void:
 	undo_redo = plugin.undo_redo
 	plugin.fine_snapping_changed.connect(func (fine_snapping: bool) -> void:
 		fine_snapping_enabled = fine_snapping
-		ramp.update_gizmos()
+		if is_instance_valid(ramp): ramp.update_gizmos()
 	)
 	plugin.snapping_changed.connect(func (snapping: bool) -> void:
 		snapping_enabled = snapping
-		ramp.update_gizmos()
+		if is_instance_valid(ramp): ramp.update_gizmos()
 	)
 
 # Debug purposes
@@ -242,7 +242,7 @@ func set_handle(
 				start_offset = _get_fill_handle_offset(camera, screen_pos, Vector3(ramp.width / 2, 0, 0))
 		is_editing = true
 
-	ramp.update_gizmos()
+	if is_instance_valid(ramp): ramp.update_gizmos()
 
 func _get_depth_handle_offset(
 	camera: Camera3D,
