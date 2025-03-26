@@ -1,8 +1,9 @@
-[gd_scene load_steps=21 format=3 uid="uid://c70y37ljl0rk0"]
+[gd_scene load_steps=23 format=3 uid="uid://c70y37ljl0rk0"]
 
 [ext_resource type="Script" uid="uid://iqakbo865cfp" path="res://entities/player/player_body.gd" id="1_i4bso"]
 [ext_resource type="Script" uid="uid://cydaqb582pukl" path="res://entities/player/spring_arm_preview_3d.gd" id="2_xhb16"]
 [ext_resource type="Script" uid="uid://clvtlqdij5ekg" path="res://entities/player/animation_player.gd" id="3_0437v"]
+[ext_resource type="Script" uid="uid://dfe1l3wvl42w3" path="res://entities/player/camera_3d.gd" id="3_ejhrd"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xkrkr"]
 height = 2.67383
@@ -41,6 +42,9 @@ height = 1.0
 material = SubResource("StandardMaterial3D_ejhrd")
 radius = 0.25
 height = 0.5
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ejhrd"]
+radius = 0.001
 
 [sub_resource type="Animation" id="Animation_m54e6"]
 resource_name = "Idle"
@@ -183,8 +187,8 @@ tracks/3/keys = {
 "values": [Vector3(-0.515, -0.313, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_amj2m"]
-resource_name = "Walk"
+[sub_resource type="Animation" id="Animation_ejhrd"]
+resource_name = "Swim"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -234,8 +238,8 @@ tracks/3/keys = {
 "values": [Vector3(0.515403, -0.313327, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_ejhrd"]
-resource_name = "Swim"
+[sub_resource type="Animation" id="Animation_amj2m"]
+resource_name = "Walk"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -363,6 +367,12 @@ script = ExtResource("2_xhb16")
 
 [node name="Camera3D" type="Camera3D" parent="Pivot/SpringArm3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
+script = ExtResource("3_ejhrd")
+
+[node name="Area3D" type="Area3D" parent="Pivot/SpringArm3D/Camera3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pivot/SpringArm3D/Camera3D/Area3D"]
+shape = SubResource("SphereShape3D_ejhrd")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -376,5 +386,7 @@ script = ExtResource("3_0437v")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.241972, 0)
 shape = SubResource("SphereShape3D_0437v")
 
+[connection signal="area_entered" from="Pivot/SpringArm3D/Camera3D/Area3D" to="Pivot/SpringArm3D/Camera3D" method="_on_area_3d_area_entered"]
+[connection signal="area_exited" from="Pivot/SpringArm3D/Camera3D/Area3D" to="Pivot/SpringArm3D/Camera3D" method="_on_area_3d_area_exited"]
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
 [connection signal="area_exited" from="Area3D" to="." method="_on_area_3d_area_exited"]
